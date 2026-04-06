@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Elenco dei tavoli</title>
+  <style>
+    :root {
+      --bg1: #fcfaf7;
+      --bg2: #f5efe8;
+      --card: rgba(255,255,255,0.94);
+      --text: #2f2a26;
+      --muted: #7a6f67;
+      --accent: #b08d57;
+      --accent-dark: #9a7847;
+      --border: #e7ddd2;
+      --shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+      linear-gradient(rgba(252,250,247,0.35), rgba(245,239,232,0.35)),
+      url('sfondo.png');
+      background-size: cover;
+      background-position: center 62%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .card {
+      width: min(100%, 920px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 14px;
+      color: var(--accent);
+      text-decoration: underline;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="elenco_tavoli.png" alt="Elenco dei tavoli" />
+    <a href="index.html">Torna indietro</a>
+  </main>
+</body>
+</html>

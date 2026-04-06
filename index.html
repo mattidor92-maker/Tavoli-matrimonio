@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Trova il tuo tavolo</title>
+  <style>
+    :root {
+      --bg1: #fcfaf7;
+      --bg2: #f5efe8;
+      --card: rgba(255,255,255,0.94);
+      --text: #2f2a26;
+      --muted: #7a6f67;
+      --accent: #b08d57;
+      --accent-dark: #9a7847;
+      --border: #e7ddd2;
+      --ok: #285943;
+      --err: #8b3a3a;
+      --shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+      linear-gradient(rgba(252,250,247,0.35), rgba(245,239,232,0.35)),
+      url('sfondo.png');
+      background-size: cover;
+      background-position: center 62%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .card {
+      width: min(100%, 520px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 18px 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      text-align: center;
+      font-size: clamp(1.85rem, 5vw, 2.25rem);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 0 0 22px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .search-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    input {
+      width: 100%;
+      min-height: 58px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input::placeholder {
+      color: #9a8f86;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(176,141,87,0.14);
+    }
+
+    button {
+      width: 100%;
+      min-height: 58px;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+      transition: transform 0.08s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+    }
+
+    .result {
+      margin-top: 18px;
+      min-height: 88px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 16px;
+      background: #fcfaf7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.55;
+      font-size: 1rem;
+    }
+
+    .ok { color: var(--ok); }
+    .err { color: var(--err); }
+
+    .hint {
+      margin-top: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+      }
+
+      .card {
+        padding: 22px 16px 18px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .result {
+        min-height: 84px;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .card {
+        padding: 34px 30px 28px;
+      }
+
+      .search-row {
+        flex-direction: row;
+      }
+
+      input {
+        flex: 1 1 auto;
+      }
+
+      button {
+        width: auto;
+        min-width: 132px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Trova il tuo tavolo</h1>
+
+    <form class="search-row" id="searchForm" novalidate>
+      <label class="sr-only" for="searchInput">Nome e cognome</label>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Es. Mario Rossi"
+        autocomplete="name"
+        autocapitalize="words"
+        autocorrect="off"
+        spellcheck="false"
+        enterkeyhint="search"
+      />
+      <button id="searchBtn" type="submit">Cerca</button>
+    </form>
+
+    <div id="result" class="result" aria-live="polite">Inserisci nome e cognome per visualizzare il tavolo assegnato.</div>
+  </main>
+
+  <script src="guests.js"></script>
+  <script>
+    function normalize(value) {
+      return value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+    const button = document.getElementById('searchBtn');
+    const result = document.getElementById('result');
+
+    function searchGuest() {
+      const query = normalize(input.value);
+
+      if (!query) {
+        result.className = 'result';
+        result.textContent = 'Inserisci nome e cognome per visualizzare il tavolo assegnato.';
+        return;
+      }
+
+      const match = GUESTS.find(person => normalize(person.name) === query);
+
+      if (match) {
+        result.className = 'result ok';
+        result.innerHTML = `<div><strong>${match.name}</strong><br>Sei assegnato al <strong>${match.table}</strong>.<br><br>Per scoprire con chi condividerai la cena clicca <a href="elenco_tavoli.pdf" target="_blank" style="text-decoration: underline; color: inherit;">qui</a>.</div>`;
+      } else {
+        result.className = 'result err';
+        result.textContent = 'Nome non trovato. Controlla di aver scritto correttamente nome e cognome.';
+      }
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      searchGuest();
+    });
+
+    window.addEventListener('load', () => {
+      if (window.innerWidth <= 900) {
+        input.focus();
+      }
+    });
+  </script>
+</body>
+</html>
