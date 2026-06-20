@@ -248,7 +248,7 @@
 
       if (match) {
         result.className = 'result ok';
-        result.innerHTML = `<div><strong>${match.name}</strong><br>Sei assegnato al <strong>${match.table}</strong>.<br><br>Per scoprire con chi condividerai la cena clicca <a href="elenco_tavoli.pdf" target="_blank" style="text-decoration: underline; color: inherit;">qui</a>.</div>`;
+        result.innerHTML = `<div><strong>${match.name}</strong><br>Sei assegnato al tavolo <strong>${match.table}</strong><br><br>Per scoprire con chi condividerai la cena e dove si trova il tuo tavolo <a href="elenco_tavoli.pdf" target="_blank" style="text-decoration: underline; color: inherit;"><strong>clicca qui</strong></a></div>`;
       } else {
         result.className = 'result err';
         result.textContent = 'Nome non trovato. Controlla di aver scritto correttamente nome e cognome.';
