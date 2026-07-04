@@ -104,7 +104,7 @@ const GUESTS = [
   { name: "Giorgia Vitiello", table: "Naha" },
   { name: "Giovanni Regaiolo", table: "Naha" },
   { name: "Antonia Moirano", table: "Naha" },
-  { name: "Giacomo Galanti", table: "Naha" },
+  { name: "Manal Sadoune", table: "Porta del Paradiso" },
   { name: "Paola Faccenda", table: "Naha" },
   { name: "Sofia Faccenda", table: "Naha" },
   { name: "Paola Gonella", table: "Naha" },
